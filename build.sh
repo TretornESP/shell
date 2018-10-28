@@ -6,7 +6,7 @@ nasm -f elf64 loader.asm -o loader.o
 #cc -m64  -ffreestanding -fno-builtin -nostdlib -c main.c
 #-Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin
 cc -m64 -masm=intel -fno-builtin -c main.c scrn.c
-ld  -Ttext 0x100000 -o kernel.elf loader.o main.o scrn.o
+ld  -Ttext 0x100000 -o kernel.elf loader.o main.o scrn.o -z max-page-size=0x1000
 objcopy -R .note -R .comment -S -O binary kernel.elf kernel.bin
 
 dd if=/dev/zero of=image.bin bs=512 count=2880
